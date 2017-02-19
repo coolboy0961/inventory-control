@@ -57,10 +57,12 @@ rectangle 中国快递公司系统{
 中国快递员 -up-> 商品运输到顾客
 中国快递员 -up-> 中国快递接收商品
 
-消费者 --> 商品购买
-消费者 --> GoodsReceiptConsumer
+消费者 -up-> 商品购买
+消费者 -up-> GoodsReceiptConsumer
 
 商品出货到国内销售商 -.-> 商品交付日本快递 : include
 商品出货到消费者 -.-> 商品交付中国快递 : include
+商品运输到中国 -.-> GoodsReceiptConsignee : include
+商品运输到顾客 -.-> GoodsReceiptConsumer :include
 
 @enduml
