@@ -1,0 +1,66 @@
+@startuml
+left to right direction
+title 库存管理系统usecase图
+
+actor 进货人
+actor 出货人
+actor 消费者
+actor 中国快递员
+actor 日本快递员
+
+
+usecase "商品收货(消费者)" as GoodsReceiptConsumer
+
+usecase 商品购买
+
+
+rectangle 库存管理系统{
+  usecase 货款结算
+  usecase 商品出货到国内销售商
+  usecase 消费者支付确认
+  usecase 商品出货到消费者
+  usecase 商品进货
+  usecase "商品收货(收货人)" as GoodsReceiptConsignee
+  usecase 货款结算取消
+  usecase 货款支付
+  usecase 货款接收
+}
+
+rectangle 日本快递公司系统{
+  usecase 商品交付日本快递
+  usecase 日本快递接收商品
+  usecase 商品运输到中国
+}
+rectangle 中国快递公司系统{
+  usecase 商品交付中国快递
+  usecase 中国快递接收商品
+  usecase 商品运输到顾客
+}
+
+'relationship'
+进货人 --> 商品进货
+进货人 --> 商品出货到国内销售商
+进货人 --> 货款结算
+进货人 --> 货款结算取消
+进货人 --> 货款接收
+
+日本快递员 -up-> 商品运输到中国
+日本快递员 -up-> 日本快递接收商品
+
+出货人 --> GoodsReceiptConsignee
+出货人 --> 商品出货到消费者
+出货人 --> 货款结算
+出货人 --> 消费者支付确认
+出货人 --> 货款结算取消
+出货人 --> 货款支付
+
+中国快递员 -up-> 商品运输到顾客
+中国快递员 -up-> 中国快递接收商品
+
+消费者 --> 商品购买
+消费者 --> GoodsReceiptConsumer
+
+商品出货到国内销售商 -.-> 商品交付日本快递 : include
+商品出货到消费者 -.-> 商品交付中国快递 : include
+
+@enduml
