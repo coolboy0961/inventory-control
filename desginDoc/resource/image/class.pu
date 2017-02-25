@@ -1,0 +1,51 @@
+@startuml
+title 库存管理系统类图
+
+  interface Entity
+  interface Repository
+
+class MainController
+
+package application{
+  class PaymentSettlementFacade
+}
+package dataAccess{
+  class ProductRepository
+  class ProductInStockJapanRepository
+  class ProductInStockChinaRepository
+  class ProductSoldRepository
+  class PaymentSettlementRepository
+}
+package service{
+  class ProductEntity
+  class ProductInStockJapanEntity
+  class ProductInStockChinaEntity
+  class ProductSoldEntity
+  class PaymentSettlementEntity
+}
+
+ProductEntity -.up|> Entity
+ProductInStockJapanEntity -.up|> Entity
+ProductInStockChinaEntity -.up|> Entity
+ProductSoldEntity -.up|> Entity
+PaymentSettlementEntity -.up|> Entity
+
+ProductRepository -.|> Repository
+ProductInStockJapanRepository -.|> Repository
+ProductInStockChinaRepository -.|> Repository
+ProductSoldRepository -.|> Repository
+PaymentSettlementRepository -.|> Repository
+
+MainController -.> PaymentSettlementFacade
+PaymentSettlementFacade -.> PaymentSettlementEntity
+PaymentSettlementEntity -.> PaymentSettlementRepository
+PaymentSettlementEntity -.> ProductEntity
+ProductEntity -.> ProductRepository
+ProductInStockJapanEntity -.> ProductInStockJapanRepository
+ProductInStockJapanEntity -.> ProductEntity
+ProductInStockChinaEntity -.> ProductInStockChinaRepository
+ProductInStockChinaEntity -.> ProductEntity
+ProductSoldEntity -.> ProductSoldRepository
+ProductSoldEntity -.> ProductEntity
+
+@enduml
