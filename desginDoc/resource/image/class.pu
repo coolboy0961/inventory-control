@@ -1,8 +1,20 @@
 @startuml
 title 库存管理系统类图
 
-  interface Entity
-  interface Repository
+  interface Entity{
+    + init()
+    + validate()
+    + find()
+    + findAll()
+    + checkIntegrity()
+    + update()
+    + updateAll()
+  }
+  interface Repository{
+    + init()
+    + getValues()
+    + setValues()
+  }
 
 class MainController
 
