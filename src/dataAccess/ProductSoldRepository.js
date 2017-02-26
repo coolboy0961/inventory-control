@@ -24,20 +24,20 @@ var Repository = (function() {
 })();
 
 //子クラス定義
-var ProductRepository = (function() {
+var ProductSoldRepository = (function() {
     //クラス内定数
 
     //コンストラクタ
-    var ProductRepository = function() {
-        if (!(this instanceof ProductRepository)) {
-            return new ProductRepository();
+    var ProductSoldRepository = function() {
+        if (!(this instanceof ProductSoldRepository)) {
+            return new ProductSoldRepository();
         }
         this.init();
     }
     //継承関係設定
-    Utility.inherits(ProductRepository, Repository);
+    Utility.inherits(ProductSoldRepository, Repository);
     //プロトタイプ内でメソッド定義
-    var p = ProductRepository.prototype;
+    var p = ProductSoldRepository.prototype;
     p.init = function() {
 
     }
@@ -47,10 +47,10 @@ var ProductRepository = (function() {
     p.getValues = function() {
         return this.values;
     }
-    return ProductRepository;
+    return ProductSoldRepository;
 })();
 
-function testProductRepository() {
-    var productRepository = new ProductRepository();
-    Logger.log(productRepository.getValues());
+function testProductSoldRepository() {
+    var productSoldRepository = new ProductSoldRepository();
+    Logger.log(productSoldRepository.getValues());
 }

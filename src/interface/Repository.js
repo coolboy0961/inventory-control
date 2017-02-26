@@ -6,8 +6,8 @@ var Repository = (function() {
         if (!(this instanceof Repository)) {
             return new Repository();
         }
+        this.init();
     }
-    this.init();
     var p = Repository.prototype;
     //プロトタイプ内でメソッド定義
     p.init = function() {
