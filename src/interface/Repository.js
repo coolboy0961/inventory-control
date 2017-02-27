@@ -19,6 +19,9 @@ var Repository = (function() {
     p.getValues = function() {
         return this.values;
     }
+    p.updateValues = function() {
+        throw new Error('Not Implemented');
+    }
     return Repository;
 })();
 

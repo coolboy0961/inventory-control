@@ -3,17 +3,19 @@ title 库存管理系统类图
 
   interface Entity{
     + init()
-    + validate()
-    + find()
+    + validate(dto)
+    + validateAll()
     + findAll()
     + checkIntegrity()
+    + add(dto)
     + update()
-    + updateAll()
   }
   interface Repository{
     + init()
     + getValues()
     + setValues()
+    + valuesToDtos()
+    + dtosToValues()
   }
 
 class MainController
@@ -29,11 +31,21 @@ package dataAccess{
   class PaymentSettlementRepository
 }
 package service{
-  class ProductEntity
-  class ProductInStockJapanEntity
-  class ProductInStockChinaEntity
-  class ProductSoldEntity
-  class PaymentSettlementEntity
+  package entity{
+    class ProductEntity
+    class ProductInStockJapanEntity
+    class ProductInStockChinaEntity
+    class ProductSoldEntity
+    class PaymentSettlementEntity
+  }
+  package dto{
+    class Product
+    class ProductInStockJapan
+    class ProductInStockChina
+    class ProductSold
+    class PaymentSettlement
+  }
+
 }
 
 ProductEntity -.up|> Entity
@@ -59,5 +71,17 @@ ProductInStockChinaEntity -.> ProductInStockChinaRepository
 ProductInStockChinaEntity -.> ProductEntity
 ProductSoldEntity -.> ProductSoldRepository
 ProductSoldEntity -.> ProductEntity
+ProductEntity o-- Product
+ProductInStockJapanEntity o-- ProductInStockJapan
+ProductInStockChinaEntity o-- ProductInStockChina
+ProductSoldEntity o-- ProductSold
+PaymentSettlementEntity o-- PaymentSettlement
+
+ProductRepository --up> Product : mapping
+ProductInStockJapanRepository --up> ProductInStockJapan : mapping
+ProductInStockChinaRepository --up> ProductInStockChina : mapping
+ProductSoldRepository --up> ProductSold : mapping
+PaymentSettlementRepository --up> PaymentSettlement : mapping
+
 
 @enduml
