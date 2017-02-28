@@ -16,6 +16,11 @@ var Utility = (function() {
         var sheet = ganttChartSpreadsheet.getSheetByName(sheetName);
         return sheet;
     }
+    Utility.getSheetByIdAndName = function(sheetId, sheetName) {
+        var ganttChartSpreadsheet = SpreadsheetApp.openById(sheetId);
+        var sheet = ganttChartSpreadsheet.getSheetByName(sheetName);
+        return sheet;
+    }
 
     Utility.inherits = function(childCtor, parentCtor) {
         /** @constructor */

@@ -2,13 +2,20 @@
 title 库存管理系统类图
 
   interface Entity{
-    + init()
-    + validate(dto)
-    + validateAll()
-    + findAll()
-    + checkIntegrity()
-    + add(dto)
-    + update()
+    + void init()
+    + boolean validate()
+    + entity find(id)
+    + boolean checkIntegrity()
+    + void put()
+    + void putToDatastore()
+  }
+  interface Entitys{
+    + void init()
+    + boolean validateAll()
+    + entity[] findAll()
+    + boolean checkIntegrityAll()
+    + void putAll()
+    + void putToDatastore()
   }
   interface Repository{
     + init()
@@ -33,17 +40,15 @@ package dataAccess{
 package service{
   package entity{
     class ProductEntity
+    class ProductsEntity
     class ProductInStockJapanEntity
+    class ProductsInStockJapanEntity
     class ProductInStockChinaEntity
+    class ProductsInStockChinaEntity
     class ProductSoldEntity
+    class ProductsSoldEntity
     class PaymentSettlementEntity
-  }
-  package dto{
-    class Product
-    class ProductInStockJapan
-    class ProductInStockChina
-    class ProductSold
-    class PaymentSettlement
+    class PaymentSettlementsEntity
   }
 
 }
@@ -54,34 +59,38 @@ ProductInStockChinaEntity -.up|> Entity
 ProductSoldEntity -.up|> Entity
 PaymentSettlementEntity -.up|> Entity
 
+ProductsEntity -.up|> Entitys
+ProductsInStockJapanEntity -.up|> Entitys
+ProductsInStockChinaEntity -.up|> Entitys
+ProductsSoldEntity -.up|> Entitys
+PaymentSettlementsEntity -.up|> Entitys
+
+ProductsEntity o-- ProductEntity
+ProductsInStockJapanEntity o-- ProductInStockJapanEntity
+ProductsInStockChinaEntity o-- ProductInStockChinaEntity
+ProductsSoldEntity o-- ProductSoldEntity
+PaymentSettlementsEntity o-- PaymentSettlementEntity
+
 ProductRepository -.|> Repository
 ProductInStockJapanRepository -.|> Repository
 ProductInStockChinaRepository -.|> Repository
 ProductSoldRepository -.|> Repository
 PaymentSettlementRepository -.|> Repository
 
-MainController -.> PaymentSettlementFacade
-PaymentSettlementFacade -.> PaymentSettlementEntity
-PaymentSettlementEntity -.> PaymentSettlementRepository
-PaymentSettlementEntity -.> ProductEntity
-ProductEntity -.> ProductRepository
-ProductInStockJapanEntity -.> ProductInStockJapanRepository
-ProductInStockJapanEntity -.> ProductEntity
-ProductInStockChinaEntity -.> ProductInStockChinaRepository
-ProductInStockChinaEntity -.> ProductEntity
-ProductSoldEntity -.> ProductSoldRepository
-ProductSoldEntity -.> ProductEntity
-ProductEntity o-- Product
-ProductInStockJapanEntity o-- ProductInStockJapan
-ProductInStockChinaEntity o-- ProductInStockChina
-ProductSoldEntity o-- ProductSold
-PaymentSettlementEntity o-- PaymentSettlement
+MainController -.> PaymentSettlementFacade : use
+PaymentSettlementFacade -.> PaymentSettlementEntity : use
+PaymentSettlementEntity -.> PaymentSettlementRepository : use
+PaymentSettlementEntity -.> ProductEntity : use
+ProductEntity -.> ProductRepository : use
+ProductInStockJapanEntity -.> ProductInStockJapanRepository : use
+ProductInStockJapanEntity -.> ProductEntity : use
+ProductInStockChinaEntity -.> ProductInStockChinaRepository : use
+ProductInStockChinaEntity -.> ProductEntity : use
+ProductSoldEntity -.> ProductSoldRepository : use
+ProductSoldEntity -.> ProductEntity : use
 
-ProductRepository --up> Product : mapping
-ProductInStockJapanRepository --up> ProductInStockJapan : mapping
-ProductInStockChinaRepository --up> ProductInStockChina : mapping
-ProductSoldRepository --up> ProductSold : mapping
-PaymentSettlementRepository --up> PaymentSettlement : mapping
+
+
 
 
 @enduml

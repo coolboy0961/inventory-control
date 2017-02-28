@@ -19,7 +19,13 @@ var Repository = (function() {
     p.getValues = function() {
         return this.values;
     }
-    p.updateValues = function() {
+    p.valuesToEntities = function() {
+        throw new Error('Not Implemented');
+    }
+    p.entitiesToValues = function() {
+        throw new Error('Not Implemented');
+    }
+    p.getInstance = function() {
         throw new Error('Not Implemented');
     }
     return Repository;

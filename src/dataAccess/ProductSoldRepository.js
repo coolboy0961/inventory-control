@@ -20,7 +20,13 @@ var Repository = (function() {
     p.getValues = function() {
         return this.values;
     }
-    p.updateValues = function() {
+    p.valuesToEntities = function() {
+        throw new Error('Not Implemented');
+    }
+    p.entitiesToValues = function() {
+        throw new Error('Not Implemented');
+    }
+    p.getInstance = function() {
         throw new Error('Not Implemented');
     }
     return Repository;
@@ -34,7 +40,7 @@ var ProductSoldRepository = (function() {
     var sheet = Utility.getSheetByIdAndName(spreadsheetId, sheetName);
     var firstRow = 2;
     var firstColumn = 1;
-    var numberColumns = 9;
+    var numberColumns = 10;
     var numberRows = sheet.getLastRow() - (firstRow - 1);
     //コンストラクタ
     var ProductSoldRepository = function() {
@@ -50,27 +56,32 @@ var ProductSoldRepository = (function() {
     p.init = function() {
         this.values = sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).getValues();
     }
-    p.updateValues = function() {
+    p.putValuesToDatastore = function() {
         sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).setValues(this.values);
     }
-    // p.findValue() = function(lastUpdateDate, productName, productQuantity, productPrice_j, shipment_j, productPrice_c, shipment_c, alreadyPay) {
-    //     for (var value in this.values) {
-    //         Utility.countDays(value[0], lastUpdateDate) == 1;
-    //         value[2] == productName;
-    //         value[3] == productQuantity;
-    //         value[4] == productPrice_j;
-    //         value[5] == shipment_j
-    //         value[6] == productPrice_c
-    //         value[7] ==
-    //             if (object.hasOwnProperty(value)) {
-    //
-    //             }
-    //     }
-    // }
+    p.valuesToEntities = function() {
+        throw new Error('Not Implemented');
+    }
+    p.entitiesToValues = function() {
+        throw new Error('Not Implemented');
+    }
+    //クラスメソッド定義
+    ProductSoldRepository.instance = undefined;
+    ProductSoldRepository.getInstance = function() {
+        if (ProductSoldRepository.instance != "" && ProductSoldRepository.instance != undefined) {
+            return ProductSoldRepository.instance;
+        } else {
+            ProductSoldRepository.instance = new ProductSoldRepository();
+            return ProductSoldRepository.instance;
+        }
+    }
     return ProductSoldRepository;
 })();
 
 function testProductSoldRepository() {
-    var productSoldRepository = new ProductSoldRepository();
+    var productSoldRepository = ProductSoldRepository.getInstance();
     Logger.log(productSoldRepository.getValues());
+    productSoldRepository.setValues(["a", "b", "c", "d"]);
+    var productSoldRepository2 = ProductSoldRepository.getInstance();
+    Logger.log(productSoldRepository2.getValues());
 }

@@ -19,13 +19,13 @@ var Entity = (function() {
     p.find = function() {
         throw new Error('Not Implemented');
     }
-    p.findAll = function() {
-        throw new Error('Not Implemented');
-    }
-    p.update = function() {
+    p.put = function() {
         throw new Error('Not Implemented');
     }
     p.checkIntegrity = function() {
+        throw new Error('Not Implemented');
+    }
+    p.putToDatastore = function() {
         throw new Error('Not Implemented');
     }
     return Entity;
