@@ -40,7 +40,7 @@ var ProductSoldRepository = (function() {
     var sheet = Utility.getSheetByIdAndName(spreadsheetId, sheetName);
     var firstRow = 2;
     var firstColumn = 1;
-    var numberColumns = 10;
+    var numberColumns = 11;
     var numberRows = sheet.getLastRow() - (firstRow - 1);
     //コンストラクタ
     var ProductSoldRepository = function() {
