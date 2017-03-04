@@ -165,8 +165,27 @@ var Utility = (function() {
         var result = y + '年' + m + '月' + d + '日 (' + wNames[w] + ')';
         return result;
     }
+    Utility.uuid = function() {
+        var uuid = "";
+        var random;
+        for (var i = 0; i < 32; i++) {
+            random = Math.random() * 16 | 0;
+
+            if (i == 8 || i == 12 || i == 16 || i == 20) {
+                uuid += "-"
+            }
+            uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+        }
+        return uuid;
+    }
     return Utility;
 })();
+
+function testUUID() {
+    for (var i = 0; i < 9; i++) {
+        Logger.log("test uuid : " + Utility.uuid());
+    }
+}
 
 function testIsDateContainsBetween() {
     var startDate = new Date(2017, 1, 09, 0, 0, 0);
