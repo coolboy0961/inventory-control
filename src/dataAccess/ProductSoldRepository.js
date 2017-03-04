@@ -77,10 +77,10 @@ var ProductSoldRepository = (function() {
     //クラスメソッド定義
     ProductSoldRepository.instance = undefined;
     ProductSoldRepository.getInstance = function() {
-        if (ProductSoldRepository.instance != "" && ProductSoldRepository.instance != undefined) {
+        if (Utility.isEmpty(ProductSoldRepository.instance)) {
+            ProductSoldRepository.instance = new ProductSoldRepository();
             return ProductSoldRepository.instance;
         } else {
-            ProductSoldRepository.instance = new ProductSoldRepository();
             return ProductSoldRepository.instance;
         }
     }
