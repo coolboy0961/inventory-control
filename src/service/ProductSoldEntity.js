@@ -66,19 +66,22 @@ var ProductSoldEntity = (function() {
 
     }
     p.validate = function() {
-        throw new Error('Not Implemented');
+        //throw new Error('Not Implemented');
     }
-    p.find = function() {
-        throw new Error('Not Implemented');
+    p.find = function(key) {
+        var productSoldRepository = ProductSoldRepository.getInstance();
+        return productSoldRepository.valuesToEntities()[key];
     }
     p.put = function() {
-        throw new Error('Not Implemented');
+        var productSoldRepository = ProductSoldRepository.getInstance();
+        productSoldRepository.putEntityToValues(this);
     }
     p.checkIntegrity = function() {
-        throw new Error('Not Implemented');
+        //throw new Error('Not Implemented');
     }
     p.putToDatastore = function() {
-        throw new Error('Not Implemented');
+        var productSoldRepository = ProductSoldRepository.getInstance();
+        productSoldRepository.putValuesToDatastore();
     }
     p.getRecordID = function() {
         return this.recordID;
@@ -154,6 +157,20 @@ var ProductSoldEntity = (function() {
     }
     return ProductSoldEntity;
 })();
+
+function testPut() {
+    var entity = new ProductSoldEntity();
+    entity = entity.find("6754ec32-5d26-4ed4-bfba-849868a686e1");
+    entity.setIsPaid("否");
+    entity.put();
+    entity.putToDatastore();
+}
+
+function testFind() {
+    var entity = new ProductSoldEntity();
+    entity = entity.find("6754ec32-5d26-4ed4-bfba-849868a686e1");
+    entity.printLog();
+}
 
 function testProductSoldEntity() {
     var productSoldEntity = new ProductSoldEntity();
