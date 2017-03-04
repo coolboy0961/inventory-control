@@ -152,8 +152,13 @@ function testProductSoldRepository() {
 }
 
 function testValuesToEntities() {
-    var productSoldRepository = new ProductSoldRepository();
+    var productSoldRepository = ProductSoldRepository.getInstance();
     var entities = productSoldRepository.valuesToEntities();
+    for (var key in entities) {
+        if (entities.hasOwnProperty(key)) {
+            entities[key].printLog();
+        }
+    }
     for (var i = 0; i < entities.length; i++) {
         Logger.log("ProductSoldEntity " + i + ":");
         entities[i].printLog();
