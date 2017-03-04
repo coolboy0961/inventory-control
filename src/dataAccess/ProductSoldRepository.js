@@ -42,6 +42,7 @@ var ProductSoldRepository = (function() {
     var firstColumn = 1;
     var numberColumns = 11;
     var numberRows = sheet.getLastRow() - (firstRow - 1);
+    var recordVersionColumnNum = 11;
     //コンストラクタ
     var ProductSoldRepository = function() {
         if (!(this instanceof ProductSoldRepository)) {
@@ -54,25 +55,52 @@ var ProductSoldRepository = (function() {
     //プロトタイプ内でメソッド定義
     var p = ProductSoldRepository.prototype;
     p.init = function() {
-        this.values = sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).getValues();
+        var sheetValues = sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).getValues();
+        this.values = new Object();
+        for (var i = 0; i < sheetValues.length; i++) {
+            if (Utility.isEmpty(sheetValues[i][0])) {
+                sheetValues[i][0] = Utility.uuid();
+            }
+            this.values[sheetValues[i][0]] = sheetValues[i];
+        }
     }
     p.putValuesToDatastore = function() {
-        sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).setValues(this.values);
+        var sheetValues = [];
+        for (var key in this.values) {
+            if (this.values.hasOwnProperty(key)) {
+                sheetValues.push(this.values[key]);
+            }
+        }
+        sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).setValues(sheetValues);
     }
     p.valuesToEntities = function() {
-        var entities = [];
-        for (var i = 0; i < this.values.length; i++) {
-            var value = this.values[i];
+        var entities = new Object();
+        for (var key in this.values) {
+            var value = this.values[key];
             var entity = new ProductSoldEntity(value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9]);
-            if (Utility.isEmpty(entity.getRecordID())) {
-                entity.setRecordID(Utility.uuid());
-            }
-            entities.push(entity);
+            entities[entity.getRecordID()] = entity;
         }
         return entities;
     }
-    p.entitiesToValues = function() {
-        throw new Error('Not Implemented');
+    p.entitiesToValues = function(entities) {
+        for (var key in entities) {
+            if (entities.hasOwnProperty(key)) {
+                this.values[key] = [
+                    entities[key].getRecordID(),
+                    entities[key].getLastUpdateTime(),
+                    entities[key].getAccountSettlementMonth(),
+                    entities[key].getProductName(),
+                    entities[key].getItemCount(),
+                    entities[key].getItemUnitPriceJPY(),
+                    entities[key].getDeliveryChargeJPY(),
+                    entities[key].getItemRetailPriceCny(),
+                    entities[key].getDeliveryChargeCNY(),
+                    entities[key].getIsPaid(),
+                    this.values[key][recordVersionColumnNum - 1] + 1
+                ];
+            }
+        }
+
     }
     //クラスメソッド定義
     ProductSoldRepository.instance = undefined;
@@ -86,6 +114,34 @@ var ProductSoldRepository = (function() {
     }
     return ProductSoldRepository;
 })();
+
+function testPutValuesToDatastore() {
+    var productSoldRepository = ProductSoldRepository.getInstance();
+    var entities = productSoldRepository.valuesToEntities();
+    for (var key in entities) {
+        if (entities.hasOwnProperty(key)) {
+            entities[key].setDeliveryChargeJPY(300);
+        }
+    }
+    productSoldRepository.entitiesToValues(entities);
+    productSoldRepository.putValuesToDatastore();
+}
+
+function testEntitiesToValues() {
+    var productSoldRepository = ProductSoldRepository.getInstance();
+    var entities = productSoldRepository.valuesToEntities();
+    for (var key in entities) {
+        if (entities.hasOwnProperty(key)) {
+            entities[key].setDeliveryChargeJPY(300);
+        }
+    }
+    productSoldRepository.entitiesToValues(entities);
+    for (var key in productSoldRepository.getValues()) {
+        if (productSoldRepository.getValues().hasOwnProperty(key)) {
+            Logger.log(productSoldRepository.getValues()[key]);
+        }
+    }
+}
 
 function testProductSoldRepository() {
     var productSoldRepository = ProductSoldRepository.getInstance();
