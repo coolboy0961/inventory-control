@@ -63,7 +63,7 @@ var ProductSoldEntity = (function() {
     var p = ProductSoldEntity.prototype;
     //プロトタイプ内でメソッド定義
     p.init = function() {
-        throw new Error('Not Implemented');
+
     }
     p.validate = function() {
         throw new Error('Not Implemented');
