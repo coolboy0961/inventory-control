@@ -22,7 +22,13 @@ var Repository = (function() {
     p.valuesToEntities = function() {
         throw new Error('Not Implemented');
     }
-    p.entitiesToValues = function() {
+    p.putEntitiesToValues = function(entities) {
+        throw new Error('Not Implemented');
+    }
+    p.putEntityToValues = function(entity) {
+        throw new Error('Not Implemented');
+    }
+    p.putValuesToDatastore = function() {
         throw new Error('Not Implemented');
     }
     p.getInstance = function() {

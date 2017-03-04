@@ -23,7 +23,13 @@ var Repository = (function() {
     p.valuesToEntities = function() {
         throw new Error('Not Implemented');
     }
-    p.entitiesToValues = function() {
+    p.putEntitiesToValues = function(entities) {
+        throw new Error('Not Implemented');
+    }
+    p.putEntityToValues = function(entity) {
+        throw new Error('Not Implemented');
+    }
+    p.putValuesToDatastore = function() {
         throw new Error('Not Implemented');
     }
     p.getInstance = function() {
@@ -31,6 +37,7 @@ var Repository = (function() {
     }
     return Repository;
 })();
+
 
 //子クラス定義
 var ProductSoldRepository = (function() {
@@ -43,6 +50,7 @@ var ProductSoldRepository = (function() {
     var numberColumns = 11;
     var numberRows = sheet.getLastRow() - (firstRow - 1);
     var recordVersionColumnNum = 11;
+    var recordIDColumnNum = 1;
     //コンストラクタ
     var ProductSoldRepository = function() {
         if (!(this instanceof ProductSoldRepository)) {
@@ -58,10 +66,10 @@ var ProductSoldRepository = (function() {
         var sheetValues = sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).getValues();
         this.values = new Object();
         for (var i = 0; i < sheetValues.length; i++) {
-            if (Utility.isEmpty(sheetValues[i][0])) {
-                sheetValues[i][0] = Utility.uuid();
+            if (Utility.isEmpty(sheetValues[i][recordIDColumnNum - 1])) {
+                sheetValues[i][recordIDColumnNum - 1] = Utility.uuid();
             }
-            this.values[sheetValues[i][0]] = sheetValues[i];
+            this.values[sheetValues[i][recordIDColumnNum - 1]] = sheetValues[i];
         }
     }
     p.putValuesToDatastore = function() {
@@ -82,7 +90,7 @@ var ProductSoldRepository = (function() {
         }
         return entities;
     }
-    p.entitiesToValues = function(entities) {
+    p.putEntitiesToValues = function(entities) {
         for (var key in entities) {
             if (entities.hasOwnProperty(key)) {
                 this.values[key] = [
@@ -100,7 +108,21 @@ var ProductSoldRepository = (function() {
                 ];
             }
         }
-
+    }
+    p.putEntityToValues = function(entity) {
+        this.values[entity.getRecordID()] = [
+            entity.getRecordID(),
+            entity.getLastUpdateTime(),
+            entity.getAccountSettlementMonth(),
+            entity.getProductName(),
+            entity.getItemCount(),
+            entity.getItemUnitPriceJPY(),
+            entity.getDeliveryChargeJPY(),
+            entity.getItemRetailPriceCny(),
+            entity.getDeliveryChargeCNY(),
+            entity.getIsPaid(),
+            this.values[entity.getRecordID()][recordVersionColumnNum - 1] + 1
+        ];
     }
     //クラスメソッド定義
     ProductSoldRepository.instance = undefined;
@@ -123,7 +145,7 @@ function testPutValuesToDatastore() {
             entities[key].setDeliveryChargeJPY(300);
         }
     }
-    productSoldRepository.entitiesToValues(entities);
+    productSoldRepository.putEntitiesToValues(entities);
     productSoldRepository.putValuesToDatastore();
 }
 
@@ -135,7 +157,7 @@ function testEntitiesToValues() {
             entities[key].setDeliveryChargeJPY(300);
         }
     }
-    productSoldRepository.entitiesToValues(entities);
+    productSoldRepository.putEntitiesToValues(entities);
     for (var key in productSoldRepository.getValues()) {
         if (productSoldRepository.getValues().hasOwnProperty(key)) {
             Logger.log(productSoldRepository.getValues()[key]);
