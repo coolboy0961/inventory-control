@@ -140,6 +140,18 @@ var ProductSoldEntity = (function() {
     p.setIsPaid = function(isPaid) {
         this.isPaid = isPaid;
     }
+    p.printLog = function() {
+        Logger.log("recordID:" + this.recordID);
+        Logger.log("lastUpdateTime:" + this.lastUpdateTime);
+        Logger.log("accountSettlementMonth:" + this.accountSettlementMonth);
+        Logger.log("productName:" + this.productName);
+        Logger.log("itemCount:" + this.itemCount);
+        Logger.log("itemUnitPriceJPY:" + this.itemUnitPriceJPY);
+        Logger.log("deliveryChargeJPY:" + this.deliveryChargeJPY);
+        Logger.log("itemRetailPriceCNY:" + this.itemRetailPriceCNY);
+        Logger.log("deliveryChargeCNY" + this.deliveryChargeCNY);
+        Logger.log("deliveryChargeCNY" + this.isPaid);
+    }
     return ProductSoldEntity;
 })();
 
