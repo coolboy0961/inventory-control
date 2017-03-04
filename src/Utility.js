@@ -178,6 +178,13 @@ var Utility = (function() {
         }
         return uuid;
     }
+    Utility.isEmpty = function(value) {
+        if (value == "" || value == undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     return Utility;
 })();
 
