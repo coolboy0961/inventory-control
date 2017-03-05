@@ -20,16 +20,37 @@ var Repository = (function() {
     p.getValues = function() {
         return this.values;
     }
-    p.updateValues = function() {
+    p.valuesToEntities = function() {
+        throw new Error('Not Implemented');
+    }
+    p.putEntitiesToValues = function(entities) {
+        throw new Error('Not Implemented');
+    }
+    p.putEntityToValues = function(entity) {
+        throw new Error('Not Implemented');
+    }
+    p.putValuesToDatastore = function() {
+        throw new Error('Not Implemented');
+    }
+    p.getInstance = function() {
         throw new Error('Not Implemented');
     }
     return Repository;
 })();
 
 //子クラス定義
+//子クラス定義
 var PaymentSettlementRepository = (function() {
     //クラス内定数
-
+    var spreadsheetId = "1sznm0e9qyu7Yg_mbPsaPgJeXWxseM3xjvAPYXKoIvps";
+    var sheetName = "货款结算一览";
+    var sheet = Utility.getSheetByIdAndName(spreadsheetId, sheetName);
+    var firstRow = 2;
+    var firstColumn = 1;
+    var numberColumns = 10;
+    var numberRows = sheet.getLastRow() - (firstRow - 1);
+    var recordVersionColumnNum = 10;
+    var accountSettlementMonth = 2;
     //コンストラクタ
     var PaymentSettlementRepository = function() {
         if (!(this instanceof PaymentSettlementRepository)) {
