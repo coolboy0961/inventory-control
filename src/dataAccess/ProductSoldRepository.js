@@ -114,15 +114,22 @@ var ProductSoldRepository = (function() {
                     entities[key].getItemCount(),
                     entities[key].getItemUnitPriceJPY(),
                     entities[key].getDeliveryChargeJPY(),
-                    entities[key].getItemRetailPriceCny(),
+                    entities[key].getItemRetailPriceCNY(),
                     entities[key].getDeliveryChargeCNY(),
                     entities[key].getIsPaid(),
-                    this.values[key][recordVersionColumnNum - 1] + 1
+                    versionNumber
                 ];
             }
         }
     }
     p.putEntityToValues = function(entity) {
+        var versionNumber;
+        var key = entity.getRecordID();
+        if (this.values.hasOwnProperty(key)) {
+            versionNumber = this.values[key][recordVersionColumnNum - 1] + 1;
+        } else {
+            versionNumber = 0;
+        }
         this.values[entity.getRecordID()] = [
             entity.getRecordID(),
             entity.getLastUpdateTime(),
