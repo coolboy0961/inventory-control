@@ -57,7 +57,33 @@ var PaymentSettlementEntity = (function() {
     var p = PaymentSettlementEntity.prototype;
     //プロトタイプ内でメソッド定義
     p.init = function() {
-
+        if (Utility.isEmpty(this.lastUpdateTime)) {
+            this.lastUpdateTime = new Date();
+        }
+        if (Utility.isEmpty(this.accountSettlementMonth)) {
+            this.accountSettlementMonth = Utility.formatDateToMonth(new Date())
+        }
+        if (Utility.isEmpty(this.costAmountJPY)) {
+            this.costAmountJPY = 0;
+        }
+        if (Utility.isEmpty(this.salesAmountJPY)) {
+            this.salesAmountJPY = 0;
+        }
+        if (Utility.isEmpty(this.incomeAmountJPY)) {
+            this.incomeAmountJPY = 0;
+        }
+        if (Utility.isEmpty(this.costAmountCNY)) {
+            this.costAmountCNY = 0;
+        }
+        if (Utility.isEmpty(this.salesAmountCNY)) {
+            this.salesAmountCNY = 0;
+        }
+        if (Utility.isEmpty(this.incomeAmountCNY)) {
+            this.incomeAmountCNY = 0;
+        }
+        if (Utility.isEmpty(this.exchange)) {
+            this.exchange = 1;
+        }
     }
     p.validate = function() {
         //throw new Error('Not Implemented');
