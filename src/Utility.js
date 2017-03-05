@@ -165,6 +165,20 @@ var Utility = (function() {
         var result = y + '年' + m + '月' + d + '日 (' + wNames[w] + ')';
         return result;
     }
+    Utility.formatDateToMonth = function(date) {
+        // 「年」「月」「日」「曜日」を Date オブジェクトから取り出してそれぞれに代入
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+
+        // 「月」で1桁だったときに頭に 0 をつける
+        if (m < 10) {
+            m = '0' + m;
+        }
+
+        // フォーマットを整形してコンソールに出力
+        var result = y + '年' + m + '月';
+        return result;
+    }
     Utility.uuid = function() {
         var uuid = "";
         var random;
