@@ -147,15 +147,15 @@ var PaymentSettlementEntity = (function() {
 
 function testPaymentSettlementEntityPut() {
     var entity = new PaymentSettlementEntity();
-    entity = entity.find("TODO");
-    entity.setExchange("TODO");
+    entity = entity.find("2017年03月");
+    entity.setExchange(0.07);
     entity.put();
     entity.putToDatastore();
 }
 
 function testPaymentSettlementEntityFind() {
     var entity = new PaymentSettlementEntity();
-    entity = entity.find("TODO");
+    entity = entity.find("2017年03月");
     entity.printLog();
 }
 
