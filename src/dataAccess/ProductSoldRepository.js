@@ -138,10 +138,10 @@ var ProductSoldRepository = (function() {
             entity.getItemCount(),
             entity.getItemUnitPriceJPY(),
             entity.getDeliveryChargeJPY(),
-            entity.getItemRetailPriceCny(),
+            entity.getItemRetailPriceCNY(),
             entity.getDeliveryChargeCNY(),
             entity.getIsPaid(),
-            this.values[entity.getRecordID()][recordVersionColumnNum - 1] + 1
+            versionNumber
         ];
     }
     //クラスメソッド定義
