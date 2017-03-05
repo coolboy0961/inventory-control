@@ -75,8 +75,8 @@ var ProductSoldsAggregateEntity = (function() {
             if (productSolds.hasOwnProperty(key)) {
                 if (Utility.isEmpty(productSolds[key].getAccountSettlementMonth()) && Utility.formatDateToMonth(productSolds[key].getLastUpdateTime()) == Utility.formatDateToMonth(new Date()) && productSolds[key].getIsPaid() == "否") {
                     paymentSettlement.setCostAmountJPY(paymentSettlement.getCostAmountJPY() + (productSolds[key].getItemCount() * productSolds[key].getItemUnitPriceJPY()));
-                    paymentSettlement.setCostAmountJPY(paymentSettlement.getCostAmountJPY() + (productSolds[key].getItemCount() * productSolds[key].getDeliveryChargeJPY()));
-                    paymentSettlement.setCostAmountJPY(paymentSettlement.getCostAmountJPY() + (productSolds[key].getItemCount() * (productSolds[key].getDeliveryChargeCNY() * exchange)));
+                    paymentSettlement.setCostAmountJPY(paymentSettlement.getCostAmountJPY() + (productSolds[key].getDeliveryChargeJPY()));
+                    paymentSettlement.setCostAmountJPY(paymentSettlement.getCostAmountJPY() + (productSolds[key].getDeliveryChargeCNY() * exchange));
                     paymentSettlement.setSalesAmountJPY(paymentSettlement.getSalesAmountJPY() + (productSolds[key].getItemCount() * (productSolds[key].getItemRetailPriceCNY() * exchange)));
                     haveTarget = true;
                 }
