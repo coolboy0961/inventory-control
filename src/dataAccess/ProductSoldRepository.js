@@ -63,13 +63,17 @@ var ProductSoldRepository = (function() {
     //プロトタイプ内でメソッド定義
     var p = ProductSoldRepository.prototype;
     p.init = function() {
-        var sheetValues = sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).getValues();
-        this.values = new Object();
-        for (var i = 0; i < sheetValues.length; i++) {
-            if (Utility.isEmpty(sheetValues[i][recordIDColumnNum - 1])) {
-                sheetValues[i][recordIDColumnNum - 1] = Utility.uuid();
+        if (numberRows == 0) {
+            this.values = new Object();
+        } else {
+            var sheetValues = sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).getValues();
+            this.values = new Object();
+            for (var i = 0; i < sheetValues.length; i++) {
+                if (Utility.isEmpty(sheetValues[i][recordIDColumnNum - 1])) {
+                    sheetValues[i][recordIDColumnNum - 1] = Utility.uuid();
+                }
+                this.values[sheetValues[i][recordIDColumnNum - 1]] = sheetValues[i];
             }
-            this.values[sheetValues[i][recordIDColumnNum - 1]] = sheetValues[i];
         }
     }
     p.putValuesToDatastore = function() {
@@ -79,7 +83,10 @@ var ProductSoldRepository = (function() {
                 sheetValues.push(this.values[key]);
             }
         }
-        sheet.getRange(firstRow, firstColumn, numberRows, numberColumns).setValues(sheetValues);
+        if (sheetValues.length == 0) {
+            return;
+        }
+        sheet.getRange(firstRow, firstColumn, sheetValues.length, numberColumns).setValues(sheetValues);
     }
     p.valuesToEntities = function() {
         var entities = new Object();
@@ -93,6 +100,12 @@ var ProductSoldRepository = (function() {
     p.putEntitiesToValues = function(entities) {
         for (var key in entities) {
             if (entities.hasOwnProperty(key)) {
+                var versionNumber;
+                if (this.values.hasOwnProperty(key)) {
+                    versionNumber = this.values[key][recordVersionColumnNum - 1] + 1;
+                } else {
+                    versionNumber = 0;
+                }
                 this.values[key] = [
                     entities[key].getRecordID(),
                     entities[key].getLastUpdateTime(),
