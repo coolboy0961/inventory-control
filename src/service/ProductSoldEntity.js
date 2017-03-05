@@ -152,13 +152,13 @@ var ProductSoldEntity = (function() {
         Logger.log("itemUnitPriceJPY:" + this.itemUnitPriceJPY);
         Logger.log("deliveryChargeJPY:" + this.deliveryChargeJPY);
         Logger.log("itemRetailPriceCNY:" + this.itemRetailPriceCNY);
-        Logger.log("deliveryChargeCNY" + this.deliveryChargeCNY);
-        Logger.log("deliveryChargeCNY" + this.isPaid);
+        Logger.log("deliveryChargeCNY:" + this.deliveryChargeCNY);
+        Logger.log("isPaid:" + this.isPaid);
     }
     return ProductSoldEntity;
 })();
 
-function testPut() {
+function testProductSoldEntityPut() {
     var entity = new ProductSoldEntity();
     entity = entity.find("6754ec32-5d26-4ed4-bfba-849868a686e1");
     entity.setIsPaid("否");
@@ -166,7 +166,7 @@ function testPut() {
     entity.putToDatastore();
 }
 
-function testFind() {
+function testProductSoldEntityFind() {
     var entity = new ProductSoldEntity();
     entity = entity.find("6754ec32-5d26-4ed4-bfba-849868a686e1");
     entity.printLog();
