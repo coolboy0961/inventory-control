@@ -157,7 +157,7 @@ var ProductSoldRepository = (function() {
     return ProductSoldRepository;
 })();
 
-function testPutValuesToDatastore() {
+function testProductSoldRepositoryPutValuesToDatastore() {
     var productSoldRepository = ProductSoldRepository.getInstance();
     var entities = productSoldRepository.valuesToEntities();
     for (var key in entities) {
@@ -169,7 +169,7 @@ function testPutValuesToDatastore() {
     productSoldRepository.putValuesToDatastore();
 }
 
-function testEntitiesToValues() {
+function testProductSoldRepositoryEntitiesToValues() {
     var productSoldRepository = ProductSoldRepository.getInstance();
     var entities = productSoldRepository.valuesToEntities();
     for (var key in entities) {
@@ -193,7 +193,7 @@ function testProductSoldRepository() {
     Logger.log(productSoldRepository2.getValues());
 }
 
-function testValuesToEntities() {
+function testProductSoldRepositoryValuesToEntities() {
     var productSoldRepository = ProductSoldRepository.getInstance();
     var entities = productSoldRepository.valuesToEntities();
     for (var key in entities) {
