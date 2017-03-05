@@ -125,10 +125,10 @@ var ProductSoldEntity = (function() {
     p.setDeliveryChargeJPY = function(deliveryChargeJPY) {
         this.deliveryChargeJPY = deliveryChargeJPY;
     }
-    p.getItemRetailPriceCny = function() {
+    p.getItemRetailPriceCNY = function() {
         return this.itemRetailPriceCNY;
     }
-    p.setItemRetailPriceCny = function(itemRetailPriceCNY) {
+    p.setItemRetailPriceCNY = function(itemRetailPriceCNY) {
         this.itemRetailPriceCNY = itemRetailPriceCNY;
     }
     p.getDeliveryChargeCNY = function() {
