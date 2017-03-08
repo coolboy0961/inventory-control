@@ -46,9 +46,9 @@ var ProductSoldsAggregateEntity = (function() {
     var p = ProductSoldsAggregateEntity.prototype;
     //プロトタイプ内でメソッド定義
     p.init = function() {
-        this.productSoldRepository = new ProductSoldRepository();
-        this.paymentSettlementRepository = new PaymentSettlementRepository();
-        this.config = new ConfigRepository();
+        this.productSoldRepository = ProductSoldRepository.getInstance();
+        this.paymentSettlementRepository = PaymentSettlementRepository.getInstance();
+        this.config = ConfigRepository.getInstance();
     }
     p.vaildateAll = function() {
         throw new Error('Not Implemented');
